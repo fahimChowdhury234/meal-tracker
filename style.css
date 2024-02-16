@@ -79,3 +79,13 @@ main {
 .modal-dialog {
     max-width: 35%;
 }
+
+@media only screen and (max-width: 768px) and (min-width: 300px) {
+    .modal-dialog {
+        max-width: 100%;
+    }
+
+    .nutritionDashboard {
+        gap: 15px;
+    }
+}
