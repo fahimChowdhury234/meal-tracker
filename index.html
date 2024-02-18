@@ -5,12 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Male Tracker</title>
       <!-- bootstrap link -->
-      <link
-         href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-         rel="stylesheet"
-         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-         crossorigin="anonymous"
-      />
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
       <link rel="stylesheet" href="./style.css" />
    </head>
    <body>
@@ -20,8 +15,8 @@
                <div class="menu d-flex justify-content-center gap-4">
                   <button onclick="showMenu('nutritionDashboard')">Nutrition Dashboard</button>
                   <button onclick="showMenu('mealCreator')">Meal Creator</button>
-                  <!-- <button onclick="showMenu('mealTracker')">Meal Tracker</button>
-                  <button onclick="showMenu('nutritionReport')">Nutrition Report</button> -->
+                  <button onclick="fetchFoodCompSpecsByItemAndSortKey()">Meal Tracker</button>
+                  <!-- <button onclick="showMenu('nutritionReport')">Nutrition Report</button> -->
                </div>
             </div>
          </nav>
@@ -56,59 +51,153 @@
             </div>
 
             <div id="mealCreator" class="mealCreator menu-content">
-               <div class="mealCreator-box d-flex align-items-center justify-content-between">
-                  <h3>Create Male</h3>
-                  <div class="mealCreator-btn">
-                     <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
-                     </button>
-                  </div>
-                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                     <div class="modal-dialog">
-                        <div class="modal-content">
-                           <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                           </div>
-                           <div class="modal-body">
-                              <form>
-                                 <div class="mb-3">
-                                    <label for="mealName" class="form-label">Meal Name</label>
-                                    <input type="text" class="form-control" id="mealName" name="mealName" />
-                                 </div>
-                                 <div class="mb-3">
-                                    <label for="addedOn" class="form-label">Added On</label>
-                                    <input type="date" class="form-control" id="addedOn" name="addedOn" />
-                                 </div>
-                                 <div class="mb-3">
-                                    <label for="mealType" class="form-label">Meal Type</label>
-                                    <select class="form-select" id="mealType" name="mealType">
-                                       <option value="">Select Meal Type</option>
-                                       <option value="breakfast">Breakfast</option>
-                                       <option value="lunch">Lunch</option>
-                                       <option value="dinner">Dinner</option>
-                                       <option value="snack">Snack</option>
-                                    </select>
-                                 </div>
-                                 <div class="mb-3">
-                                    <label for="timeEaten" class="form-label">Time Eaten</label>
-                                    <input type="number" class="form-control" id="timeEaten" name="timeEaten" placeholder=" " />
-                                 </div>
-                                 <div class="mb-3">
-                                    <label for="availableFood" class="form-label">Available Food</label>
-                                    <input type="text" class="form-control" id="availableFood" name="availableFood" />
-                                 </div>
-                                 <div class="mb-3">
-                                    <label for="quantity" class="form-label">Quantity</label>
-                                    <input type="number" class="form-control" id="quantity" name="quantity" />
-                                 </div>
-                                 <button type="submit" class="btn btn-primary btn-lg px-4">Add</button>
-                              </form>
+               <div class="mealCreator-box">
+                  <div class="d-flex align-items-center justify-content-between">
+                     <h3>Create Male</h3>
+                     <div class="mealCreator-btn d-flex">
+                        <button type="button" class="btn-dinner" data-bs-toggle="modal" data-bs-target="#exampleModal" data-meal-type="dinner">
+                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                           </svg>
+                        </button>
+                        <button type="button" class="btn-liquid" data-bs-toggle="modal" data-bs-target="#exampleModal" data-meal-type="liquid">
+                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                           </svg>
+                        </button>
+                     </div>
+
+                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                 <form class="row">
+                                    <div class="mb-3 col-md-12">
+                                       <label for="mealName" class="form-label">Meal Name</label>
+                                       <input type="text" class="form-control" id="mealName" name="mealName" required />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                       <label for="addedOn" class="form-label">Added On</label>
+                                       <input type="date" class="form-control" id="addedOn" name="addedOn" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                       <label for="mealType" class="form-label">Meal Type</label>
+                                       <select class="form-select" id="mealType" name="mealType">
+                                          <option value="">Select Meal Type</option>
+                                          <option value="liquid">liquid</option>
+
+                                          <option value="dinner">Dinner</option>
+                                       </select>
+                                    </div>
+
+                                    <div class="col-md-6 row">
+                                       <div class="mb-3 col-md-8">
+                                          <label for="availableFood" class="form-label">Available Food</label>
+                                          <div class="availableFood" id="availableFood"></div>
+                                       </div>
+                                       <div class="mb-3 col-md-4">
+                                          <label for="quantity" class="form-label">Quantity</label>
+                                          <input type="number" class="form-control" id="quantity" name="quantity" />
+                                          <button type="submit" class="btn btn-primary btn-lg px-4 mt-3" id="addIngredientsBtn">Add ingredients</button>
+                                       </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <table class="table table-striped table-secondary" id="ingredientsTable" style="display: none">
+                                          <thead>
+                                             <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Qty</th>
+                                                <th scope="col">Energy</th>
+                                                <th scope="col">Protien</th>
+                                                <th scope="col">Fat</th>
+                                                <th scope="col">Fiver</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody id="ingredientsBody"></tbody>
+                                       </table>
+                                       <p id="lodder" style="display: none">Data featching</p>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                       <label for="timeEaten" class="form-label">Time Eaten</label>
+                                       <input type="number" class="form-control" id="timeEaten" name="timeEaten" required placeholder=" " />
+                                    </div>
+                                    <input type="submit" id="addBtn" class="btn btn-primary btn-lg px-4" />
+                                    <!-- <input type="submit" class="btn btn-primary btn-lg px-4" id="addBtn">Add</input> -->
+                                 </form>
+                              </div>
                            </div>
                         </div>
                      </div>
+
+                     <!-- <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+                        <div class="modal-dialog">
+                           <div class="modal-content">
+                              <div class="modal-header">
+                                 <h5 class="modal-title" id="exampleModalLabel1">Modal</h5>
+                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                 <form>
+                                    <div class="mb-3">
+                                       <label for="mealName" class="form-label">Meal Name</label>
+                                       <input type="text" class="form-control" id="mealName" name="mealName" />
+                                    </div>
+                                    <div class="mb-3">
+                                       <label for="addedOn" class="form-label">Added On</label>
+                                       <input type="date" class="form-control" id="addedOn" name="addedOn" />
+                                    </div>
+                                    <div class="mb-3">
+                                       <label for="mealType" class="form-label">Meal Type</label>
+                                       <select class="form-select" id="mealType" name="mealType">
+                                          <option value="">Select Meal Type</option>
+                                          <option value="breakfast">Breakfast</option>
+                                          <option value="lunch">Lunch</option>
+                                          <option value="dinner">Dinner</option>
+                                          <option value="snack">Snack</option>
+                                       </select>
+                                    </div>
+                                    <div class="mb-3">
+                                       <label for="timeEaten" class="form-label">Time Eaten</label>
+                                       <input type="number" class="form-control" id="timeEaten" name="timeEaten" placeholder=" " />
+                                    </div>
+                                    <div class="mb-3">
+                                       <label for="availableFood" class="form-label">Available Food</label>
+                                       <input type="text" class="form-control" id="availableFood" name="availableFood" />
+                                    </div>
+                                    <div class="mb-3">
+                                       <label for="quantity" class="form-label">Quantity</label>
+                                       <input type="number" class="form-control" id="quantity" name="quantity" />
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-lg px-4">Add</button>
+                                 </form>
+                              </div>
+                           </div>
+                        </div>
+                     </div> -->
+                  </div>
+
+                  <div class="p-5">
+                     <table class="" id="mealDataTable" style="display: none">
+                        <thead>
+                           <tr>
+                              <th scope="col">Index</th>
+                              <th scope="col">Meal Name</th>
+                              <th scope="col">Added On</th>
+
+                              <th scope="col">Ingredients</th>
+                              <th scope="col">Total Energy</th>
+                              <th scope="col">Time Eaten</th>
+                              <th scope="col">Action</th>
+                           </tr>
+                        </thead>
+                        <tbody id="mealDataTableBody">
+                           <!-- Table rows will be dynamically added here -->
+                        </tbody>
+                     </table>
                   </div>
                </div>
             </div>
@@ -116,29 +205,8 @@
       </main>
       <!-- js files -->
       <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-      <script
-         src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-         crossorigin="anonymous"
-      ></script>
-      <script>
-         // Funktion til at hente måltider fra API'et
-         async function hentMåltiderFraAPI() {
-            try {
-               const respons = await fetch("https://nutrimonapi.azurewebsites.net/api/FoodItems/1", {
-                  headers: {
-                     "X-API-Key": "171007",
-                  },
-               });
-               const data = await respons.json();
-               console.log(data);
-               return data; // Returnerer dataene fra API'et
-            } catch (fejl) {
-               console.error("Fejl ved hentning af måltider:", fejl);
-               return null;
-            }
-         }
-      </script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
       <script src="./main.js"></script>
    </body>
 </html>
