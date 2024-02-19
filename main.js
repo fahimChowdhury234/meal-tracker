@@ -61,6 +61,7 @@ async function getFoodName() {
                 const clickedName = element.textContent.toString();
                 selsectFoodName = clickedName;
                 if (clickedName !== null) {
+
                     foodItems.forEach((element) => {
                         if (element.foodName !== null) {
                             if (element.foodName.includes(clickedName)) {
@@ -233,7 +234,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Check if data exists in local storage
     if (localStorage.getItem("mealDataArray")) {
         mealDataArray = JSON.parse(localStorage.getItem("mealDataArray"));
+
         displayMealDataInTable();
+
     }
 
     // Add event listener to form submission
@@ -259,7 +262,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 fat: columns[4].textContent,
                 fiber: columns[5].textContent,
             };
-
             ingredients.push(ingredient);
         });
 
@@ -279,6 +281,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (mealName == "" || addedOn == "" || mealType == "" || timeEaten == "") {
             return false;
         }
+
+        // Now you have all the data in mealDataArray, you can do whatever you want with it
 
         document.getElementById("mealDataTable").style.display = "table";
         // Reset form fields
@@ -307,6 +311,7 @@ function displayMealDataInTable() {
         document.getElementById("mealDataTable").style.display = "table";
     } else {
         document.getElementById("mealDataTable").style.display = "none";
+
     }
     // Clear existing table data
     tableBody.innerHTML = "";
@@ -348,39 +353,37 @@ function displayMealDataInTable() {
         cellTotalEnergy.textContent = totalEnergy.toFixed(2);
 
         // Add edit and delete buttons to the actions cell
-        const editButton = document.createElement("button");
-        editButton.classList.add("editBtn");
-        editButton.addEventListener("click", () => {
+        const editButton = document.createElement('button');
+        editButton.classList.add('editBtn');
+        editButton.addEventListener('click', () => {
             // Handle edit action
-
             openEditModal(index);
         });
-        const editIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        editIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        editIcon.setAttribute("viewBox", "0 0 24 24");
-        editIcon.setAttribute("fill", "currentColor");
-        editIcon.setAttribute("width", "20");
-        editIcon.setAttribute("height", "20");
-        editIcon.classList.add("w-6", "h-6");
+        const editIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        editIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+        editIcon.setAttribute('viewBox', '0 0 24 24');
+        editIcon.setAttribute('fill', 'currentColor');
+        editIcon.setAttribute('width', '20');
+        editIcon.setAttribute('height', '20');
+        editIcon.classList.add('w-6', 'h-6');
         editIcon.innerHTML = `
             <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
         `;
         editButton.appendChild(editIcon);
 
-        const deleteButton = document.createElement("button");
-        deleteButton.classList.add("deleteBtn");
-        deleteButton.addEventListener("click", () => {
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('deleteBtn');
+        deleteButton.addEventListener('click', () => {
             // Handle delete action
-
             deleteItem(index);
         });
-        const deleteIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        deleteIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        deleteIcon.setAttribute("viewBox", "0 0 24 24");
-        deleteIcon.setAttribute("fill", "currentColor");
-        deleteIcon.setAttribute("width", "20");
-        deleteIcon.setAttribute("height", "20");
-        deleteIcon.classList.add("w-6", "h-6");
+        const deleteIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        deleteIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+        deleteIcon.setAttribute('viewBox', '0 0 24 24');
+        deleteIcon.setAttribute('fill', 'currentColor');
+        deleteIcon.setAttribute('width', '20');
+        deleteIcon.setAttribute('height', '20');
+        deleteIcon.classList.add('w-6', 'h-6');
         deleteIcon.innerHTML = `
             <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
         `;
@@ -394,41 +397,43 @@ function displayMealDataInTable() {
 function deleteItem(index) {
     mealDataArray.splice(index, 1);
 
-    let storedData = JSON.parse(localStorage.getItem("mealDataArray"));
+    let storedData = JSON.parse(localStorage.getItem('mealDataArray'));
     storedData.splice(index, 1);
-    localStorage.setItem("mealDataArray", JSON.stringify(storedData));
+    localStorage.setItem('mealDataArray', JSON.stringify(storedData));
     displayMealDataInTable(storedData); // Redraw the table with the updated data
+
 }
 
 function openEditModal(index) {
     // Populate modal with meal data
     const mealData = mealDataArray[index];
-    document.getElementById("editMealName").value = mealData.mealName;
-    document.getElementById("editAddedOn").value = mealData.addedOn;
-    document.getElementById("editTimeEaten").value = mealData.timeEaten;
+    document.getElementById('editMealName').value = mealData.mealName;
+    document.getElementById('editAddedOn').value = mealData.addedOn;
+    document.getElementById('editTimeEaten').value = mealData.timeEaten;
     // You can similarly populate other fields like date
 
     // Show the modal
-    $("#editModal").modal("show");
+    $('#editModal').modal('show');
 
     // Add event listener to the modal save button
-    document.getElementById("saveEditBtn").addEventListener("click", () => {
+    document.getElementById('saveEditBtn').addEventListener('click', () => {
         // Update meal data in mealDataArray
-        mealDataArray[index].mealName = document.getElementById("editMealName").value;
-        mealDataArray[index].addedOn = document.getElementById("editAddedOn").value;
-        mealDataArray[index].timeEaten = document.getElementById("editTimeEaten").value;
+        mealDataArray[index].mealName = document.getElementById('editMealName').value;
+        mealDataArray[index].addedOn = document.getElementById('editAddedOn').value;
+        mealDataArray[index].timeEaten = document.getElementById('editTimeEaten').value;
         // You can similarly update other fields like date
 
         // Update local storage
-        localStorage.setItem("mealDataArray", JSON.stringify(mealDataArray));
+        localStorage.setItem('mealDataArray', JSON.stringify(mealDataArray));
 
         // Update the table display
         displayMealDataInTable();
 
         // Hide the modal
-        $("#editModal").modal("hide");
+        $('#editModal').modal('hide');
     });
 }
+
 
 function displaySummary() {
     const summaryTable = document.getElementById("summaryTable");
@@ -522,29 +527,33 @@ document.getElementById("exampleModal").addEventListener("show.bs.modal", functi
     }
 });
 
+
+
 // Add event listener to the dinner button
-document.getElementById("btnDinner").addEventListener("click", () => {
+document.getElementById('btnDinner').addEventListener('click', () => {
+    console.log('dinnerMeals');
+
     // Filter mealDataArray for dinner meals
-    const dinnerMeals = mealDataArray.filter((meal) => meal.mealType === "dinner");
+    const dinnerMeals = mealDataArray.filter(meal => meal.mealType === 'dinner');
     if (dinnerMeals.length === 0) {
-        document.getElementById("NoName").style.display = "block";
+        document.getElementById('NoName').style.display = 'block'
     } else {
-        document.getElementById("NoName").style.display = "none";
+        document.getElementById('NoName').style.display = 'none'
+
     }
-    console.log(dinnerMeals);
     // Open modal with dinner data
     openMealTrackerModal(dinnerMeals);
 });
 
 // Add event listener to the liquid button
-document.getElementById("btnLiquid").addEventListener("click", () => {
+document.getElementById('btnLiquid').addEventListener('click', () => {
     // Filter mealDataArray for liquid meals
-    const liquidMeals = mealDataArray.filter((meal) => meal.mealType === "liquid");
-
+    const liquidMeals = mealDataArray.filter(meal => meal.mealType === 'liquid');
     if (liquidMeals.length === 0) {
-        document.getElementById("NoName").style.display = "block";
+        document.getElementById('NoName').style.display = 'block'
     } else {
-        document.getElementById("NoName").style.display = "none";
+        document.getElementById('NoName').style.display = 'none'
+
     }
     // Open modal with liquid data
     openMealTrackerModal(liquidMeals);
@@ -552,91 +561,105 @@ document.getElementById("btnLiquid").addEventListener("click", () => {
 
 function openMealTrackerModal(meals) {
     // Show the modal
-    $("#mealTrackerModal").modal("show");
-    const mealNamesDiv = document.getElementById("mealnames");
+    $('#mealTrackerModal').modal('show');
+    const mealNamesDiv = document.getElementById('mealnames');
 
-    meals.forEach((meal) => {
+    meals.forEach(meal => {
         if (meal.mealName != null) {
-            const pTag = document.createElement("p");
+            const pTag = document.createElement('p');
             pTag.textContent = meal.mealName;
             // Add event listener to each p element
-            pTag.addEventListener("click", function () {
+            pTag.addEventListener('click', function () {
                 // Remove the background color from all p elements
-                mealNamesDiv.querySelectorAll("p").forEach((p) => {
-                    p.style.backgroundColor = "";
+                mealNamesDiv.querySelectorAll('p').forEach(p => {
+                    p.style.backgroundColor = '';
                 });
                 // Highlight the clicked p element
-                pTag.style.backgroundColor = "lightblue";
+                pTag.style.backgroundColor = 'lightblue';
             });
             mealNamesDiv.appendChild(pTag);
         }
     });
+
 }
 let mealTrackerDataArray = [];
 document.addEventListener("DOMContentLoaded", function () {
+
     // Check if data exists in local storage
     if (localStorage.getItem("mealTrackerData")) {
         mealTrackerDataArray = JSON.parse(localStorage.getItem("mealTrackerData"));
 
         displayMealTrackerData();
-    }
-    document.getElementById("addMealTreckerItem").addEventListener("click", () => {
-        let mealName = document.getElementById("mealnames").querySelector('p[style="background-color: lightblue;"]').textContent;
-        let dateOfConsumption = document.getElementById("dateOfConsumption").value;
-        let timeOfConsumption = document.getElementById("timeOfConsumption").value;
-        let consumptionWigth = document.getElementById("consumptionWigth").value;
 
-        const selectedMeal = mealDataArray.find((meal) => meal.mealName === mealName);
-        const selectedIngredients = mealDataArray.find((meal) => meal.mealName === mealName);
-        const energy = selectedMeal.ingredients.find((ingredient) => ingredient.name.toLowerCase() === "total").energy;
+    }
+    document.getElementById('addMealTreckerItem').addEventListener('click', () => {
+        let mealName = document.getElementById('mealnames').querySelector('p[style="background-color: lightblue;"]').textContent;
+        let dateOfConsumption = document.getElementById('dateOfConsumption').value;
+        let timeOfConsumption = document.getElementById('timeOfConsumption').value;
+        let consumptionWigth = document.getElementById('consumptionWigth').value;
+
+        const selectedMeal = mealDataArray.find(meal => meal.mealName === mealName);
+        const selectedIngredients = mealDataArray.find(meal => meal.mealName === mealName);
+        const energy = selectedMeal.ingredients.find(ingredient => ingredient.name.toLowerCase() === 'total').energy;
+
+
 
         // Create an object for the meal tracker data
         const mealTrackerData = {
             mealName: mealName,
             mealType: selectedMeal.mealType,
-            addedOn: dateOfConsumption + " " + timeOfConsumption,
+            addedOn: dateOfConsumption + ' ' + timeOfConsumption,
             consumptionWigth: consumptionWigth,
             energy: energy,
             ingredients: selectedIngredients,
-            percentage1: "30g",
-            percentage2: "12g",
-            percentage3: "2mg",
-            percentage4: "15",
+            percentage1: '30g',
+            percentage2: '12g',
+            percentage3: '2mg',
+            percentage4: '15'
         };
 
         // Push the meal tracker data to the mealTrackerData array
         mealTrackerDataArray.push(mealTrackerData);
 
         // Store the updated mealTrackerData array in local storage
-        localStorage.setItem("mealTrackerData", JSON.stringify(mealTrackerDataArray));
-        document.getElementById("mealTrackerDataForm").reset();
-        mealName = "";
-        dateOfConsumption = "";
-        timeOfConsumption = "";
-        consumptionWigth = "";
-
-        const mealNamesDiv = document.getElementById("mealnames");
+        localStorage.setItem('mealTrackerData', JSON.stringify(mealTrackerDataArray));
+        document.getElementById('mealTrackerDataForm').reset()
+        mealName = '';
+        dateOfConsumption = '';
+        timeOfConsumption = '';
+        consumptionWigth = '';
+        const mealNamesDiv = document.getElementById('mealnames');
         if (mealNamesDiv) {
-            mealNamesDiv.innerHTML = "";
+            mealNamesDiv.innerHTML = '';
         }
         // Update the table display
 
         displayMealTrackerData();
         updateNutriArray(mealTrackerDataArray);
         updateNutritionDashboard();
+
+
     });
-});
+})
+
+
 
 function displayMealTrackerData() {
     const tableBody = document.getElementById("mealTrackerDataBody");
     // Clear existing table data
     tableBody.innerHTML = "";
-    mealTrackerDataArray = JSON.parse(localStorage.getItem("mealTrackerData"));
+    if (localStorage.getItem("mealTrackerData")) {
+        mealTrackerDataArray = JSON.parse(localStorage.getItem("mealTrackerData"));
+
+    }
 
     if (mealTrackerDataArray.length > 0) {
         document.getElementById("mealTrackerDataTable").style.display = "table";
+
     } else {
         document.getElementById("mealTrackerDataTable").style.display = "none";
+
+
     }
     // Iterate through each meal tracker data in the mealTrackerDataArray
     mealTrackerDataArray.forEach((mealTrackerData, index) => {
@@ -659,7 +682,7 @@ function displayMealTrackerData() {
         cellWeightEnergy.textContent = `${mealTrackerData.consumptionWigth} g / ${mealTrackerData.energy} kJ`;
 
         // Create p tags with different class names for static percentage values
-        const percentageTags = document.createElement("div");
+        const percentageTags = document.createElement('div');
         percentageTags.innerHTML = `
             <p class="percentage-tag">${mealTrackerData.percentage1}</p>
             <p class="percentage-tag">${mealTrackerData.percentage2}</p>
@@ -669,39 +692,38 @@ function displayMealTrackerData() {
         cellPercentage.appendChild(percentageTags);
 
         // Add edit and delete buttons to the actions cell
-        const editButton = document.createElement("button");
-        editButton.classList.add("editBtn");
-        editButton.addEventListener("click", () => {
+        const editButton = document.createElement('button');
+        editButton.classList.add('editBtn');
+        editButton.addEventListener('click', () => {
             // Handle edit action
-
             openEditMealTrackerModal(index);
         });
-        const editIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        editIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        editIcon.setAttribute("viewBox", "0 0 24 24");
-        editIcon.setAttribute("fill", "currentColor");
-        editIcon.setAttribute("width", "20");
-        editIcon.setAttribute("height", "20");
-        editIcon.classList.add("w-6", "h-6");
+        const editIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        editIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+        editIcon.setAttribute('viewBox', '0 0 24 24');
+        editIcon.setAttribute('fill', 'currentColor');
+        editIcon.setAttribute('width', '20');
+        editIcon.setAttribute('height', '20');
+        editIcon.classList.add('w-6', 'h-6');
         editIcon.innerHTML = `
             <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z"></path>
         `;
         editButton.appendChild(editIcon);
 
-        const deleteButton = document.createElement("button");
-        deleteButton.classList.add("deleteBtn");
-        deleteButton.addEventListener("click", () => {
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('deleteBtn');
+        deleteButton.addEventListener('click', () => {
             // Handle delete action
 
             deleteMealTrackerData(index);
         });
-        const deleteIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        deleteIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        deleteIcon.setAttribute("viewBox", "0 0 24 24");
-        deleteIcon.setAttribute("fill", "currentColor");
-        deleteIcon.setAttribute("width", "20");
-        deleteIcon.setAttribute("height", "20");
-        deleteIcon.classList.add("w-6", "h-6");
+        const deleteIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        deleteIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+        deleteIcon.setAttribute('viewBox', '0 0 24 24');
+        deleteIcon.setAttribute('fill', 'currentColor');
+        deleteIcon.setAttribute('width', '20');
+        deleteIcon.setAttribute('height', '20');
+        deleteIcon.classList.add('w-6', 'h-6');
         deleteIcon.innerHTML = `
             <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd"></path>
         `;
@@ -711,16 +733,16 @@ function displayMealTrackerData() {
         cellActions.appendChild(deleteButton);
     });
 
-    $("#mealTrackerModal").modal("hide");
+    $('#mealTrackerModal').modal('hide');
 }
 
 function deleteMealTrackerData(index) {
     mealTrackerDataArray.splice(index, 1);
 
-    let storedData = JSON.parse(localStorage.getItem("mealTrackerData"));
+    let storedData = JSON.parse(localStorage.getItem('mealTrackerData'));
     storedData.splice(index, 1);
-    localStorage.setItem("mealTrackerData", JSON.stringify(storedData));
-    displayMealTrackerData(storedData);
+    localStorage.setItem('mealTrackerData', JSON.stringify(storedData));
+    displayMealTrackerData(storedData)
     updateNutriArray(storedData);
     updateNutritionDashboard();
 }
@@ -731,12 +753,12 @@ function updateNutriArray(data) {
 
     // Iterate through the meal data to update nutriarray
 
-    data.forEach((meal) => {
+    data.forEach(meal => {
         // Extract the date from the meal
-        const mealDate = meal.addedOn.split(" ")[0]; // Assuming the date is in the 'YYYY-MM-DD' format
+        const mealDate = meal.addedOn.split(' ')[0]; // Assuming the date is in the 'YYYY-MM-DD' format
 
         // Check if there is already an object in nutriarray with the same date
-        const existingObjectIndex = nutriarray.findIndex((obj) => obj.date === mealDate);
+        const existingObjectIndex = nutriarray.findIndex(obj => obj.date === mealDate);
 
         // If an object with the same date exists, add the meal data to that object
         if (existingObjectIndex !== -1) {
@@ -745,12 +767,12 @@ function updateNutriArray(data) {
             // If an object with the same date doesn't exist, create a new object
             nutriarray.push({
                 date: mealDate,
-                meals: [meal], // Add the meal data as the first item in an array
+                meals: [meal] // Add the meal data as the first item in an array
             });
         }
     });
     // Calculate total nutrient values for each date group in nutriarray
-    nutriarray.forEach((nutriObj) => {
+    nutriarray.forEach(nutriObj => {
         // Initialize variables to store the total values
         let totalEnergy = 0;
         let totalFat = 0;
@@ -758,9 +780,9 @@ function updateNutriArray(data) {
         let totalProtein = 0;
 
         // Iterate through the meals array for each nutriObj
-        nutriObj.meals.forEach((meal) => {
+        nutriObj.meals.forEach(meal => {
             // Extract the total object from the ingredients array for each meal
-            const totalObject = meal.ingredients.ingredients.find((ingredient) => ingredient.name.toLowerCase() === "total");
+            const totalObject = meal.ingredients.ingredients.find(ingredient => ingredient.name.toLowerCase() === 'total');
 
             // Add the values from the total object to the respective totals
             totalEnergy += parseFloat(totalObject.energy);
@@ -774,29 +796,32 @@ function updateNutriArray(data) {
             energy: totalEnergy,
             fat: totalFat,
             fiber: totalFiber,
-            protein: totalProtein,
+            protein: totalProtein
         };
     });
 
     // Store nutriarray data in local storage
-    localStorage.setItem("nutriarray", JSON.stringify(nutriarray));
+    localStorage.setItem('nutriarray', JSON.stringify(nutriarray));
 
     // Display the nutriarray data in the table
     displayNutriDataInTable(nutriarray);
+
+
 }
 let nutriarray = [];
 
 document.addEventListener("DOMContentLoaded", function () {
+
     // Initialize an empty array to store the grouped data
     const nutriarray = [];
 
     // Iterate through the mealTrackerDataArray
-    mealTrackerDataArray.forEach((meal) => {
+    mealTrackerDataArray.forEach(meal => {
         // Extract the date from the meal
-        const mealDate = meal.addedOn.split(" ")[0]; // Assuming the date is in the 'YYYY-MM-DD' format
+        const mealDate = meal.addedOn.split(' ')[0]; // Assuming the date is in the 'YYYY-MM-DD' format
 
         // Check if there is already an object in nutriarray with the same date
-        const existingObjectIndex = nutriarray.findIndex((obj) => obj.date === mealDate);
+        const existingObjectIndex = nutriarray.findIndex(obj => obj.date === mealDate);
 
         // If an object with the same date exists, add the meal data to that object
         if (existingObjectIndex !== -1) {
@@ -805,13 +830,13 @@ document.addEventListener("DOMContentLoaded", function () {
             // If an object with the same date doesn't exist, create a new object
             nutriarray.push({
                 date: mealDate,
-                meals: [meal], // Add the meal data as the first item in an array
+                meals: [meal] // Add the meal data as the first item in an array
             });
         }
     });
 
     // Calculate total nutrient values for each date group in nutriarray
-    nutriarray.forEach((nutriObj) => {
+    nutriarray.forEach(nutriObj => {
         // Initialize variables to store the total values
         let totalEnergy = 0;
         let totalFat = 0;
@@ -819,9 +844,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let totalProtein = 0;
 
         // Iterate through the meals array for each nutriObj
-        nutriObj.meals.forEach((meal) => {
+        nutriObj.meals.forEach(meal => {
             // Extract the total object from the ingredients array for each meal
-            const totalObject = meal.ingredients.ingredients.find((ingredient) => ingredient.name.toLowerCase() === "total");
+            const totalObject = meal.ingredients.ingredients.find(ingredient => ingredient.name.toLowerCase() === 'total');
 
             // Add the values from the total object to the respective totals
             totalEnergy += parseFloat(totalObject.energy);
@@ -835,12 +860,12 @@ document.addEventListener("DOMContentLoaded", function () {
             energy: totalEnergy,
             fat: totalFat,
             fiber: totalFiber,
-            protein: totalProtein,
+            protein: totalProtein
         };
     });
 
     // Store nutriarray data in local storage
-    localStorage.setItem("nutriarray", JSON.stringify(nutriarray));
+    localStorage.setItem('nutriarray', JSON.stringify(nutriarray));
 
     // Display the nutriarray data in the table
     displayNutriDataInTable(nutriarray);
@@ -849,19 +874,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function displayNutriDataInTable(nutriarray) {
     //    Reference to the table body
-    const nutriDataBody = document.getElementById("nutriDataBody");
+    const nutriDataBody = document.getElementById('nutriDataBody');
 
     // Clear previous content in the table body
-    nutriDataBody.innerHTML = "";
+    nutriDataBody.innerHTML = '';
 
     // Iterate through the nutriarray to populate the table
-    nutriarray.forEach((nutriObj) => {
+    nutriarray.forEach(nutriObj => {
         // Create a new table row
-        const row = document.createElement("tr");
-        const liquidMeals = nutriObj.meals.filter((meal) => meal.mealType === "liquid");
+        const row = document.createElement('tr');
+        const liquidMeals = nutriObj.meals.filter(meal => meal.mealType === 'liquid');
 
         // Calculate water value (consumption weight divided by 1000) for liquid meals
-        const water = liquidMeals.reduce((total, meal) => total + parseFloat(meal.consumptionWigth) / 1000, 0);
+        const water = liquidMeals.reduce((total, meal) => total + (parseFloat(meal.consumptionWigth) / 1000), 0);
 
         // Populate the row with data
         row.innerHTML = `
@@ -881,48 +906,28 @@ function displayNutriDataInTable(nutriarray) {
 
 document.addEventListener("DOMContentLoaded", function () {
     // Load meal data from local storage
-    updateNutritionDashboard();
-});
+    updateNutritionDashboard()
+})
+
 
 function updateNutritionDashboard() {
     let nutriarray = [];
     if (localStorage.getItem("nutriarray")) {
         nutriarray = JSON.parse(localStorage.getItem("nutriarray"));
-
         displayMealTrackerData();
     }
 
-    const today = new Date().toISOString().split("T")[0]; // Format: YYYY-MM-DD
-    console.log(today);
+
+
+    const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+
     // Find today's data from nutriarray
-    let todayData = nutriarray.find((obj) => obj.date === today);
-
-    // If today's data is not available, find the nearest available day data
-    if (!todayData) {
-        console.log('kloo');
-        // Sort the nutriarray by date in descending order
-        nutriarray.sort((a, b) => (a.date > b.date ? -1 : 1));
-        console.log(nutriarray);
-        // Find the nearest available day data
-        for (const data of nutriarray) {
-            if (data.date > today) {
-                todayData = data;
-                break;
-            }
-        }
-    }
-
-    // If no suitable data is found, set todayData to undefined
-    if (!todayData) {
-        console.log('kkk');
-        todayData = undefined;
-    }
-
-    if (typeof todayData === "undefined") {
-        document.getElementById("nutritionDashboardToDay").textContent = "0";
-        document.getElementById("nutritionDashboardEnargy").textContent = "0.00 kcal";
-        document.getElementById("nutritionDashboardWater").textContent = "0.00 L";
-        document.getElementById("nutritionDashboardProtion").textContent = "0.00 g";
+    const todayData = nutriarray.find(obj => obj.date === today);
+    if (typeof todayData === 'undefined') {
+        document.getElementById('nutritionDashboardToDay').textContent = '0';
+        document.getElementById('nutritionDashboardEnargy').textContent = '0.00 kcal';
+        document.getElementById('nutritionDashboardWater').textContent = '0.00 L';
+        document.getElementById('nutritionDashboardProtion').textContent = '0.00 g';
     }
     // If today's data is found, update the nutrition dashboard
     if (todayData) {
@@ -930,32 +935,36 @@ function updateNutritionDashboard() {
             meals,
             totalNutrients
         } = todayData;
-
         // Calculate total energy, water, and protein for today
         let totalEnergyToday = totalNutrients.energy;
         let totalWaterToday = 0;
         let totalProteinToday = totalNutrients.protein;
-        meals.forEach((meal) => {
-            if (meal.mealType.toLowerCase() === "liquid") {
+        meals.forEach(meal => {
+            if (meal.mealType.toLowerCase() === 'liquid') {
                 totalWaterToday += parseFloat(meal.consumptionWigth) / 1000; // Assuming water is measured in grams
             }
         });
 
+
         // Update the nutrition dashboard elements with today's data
-        document.getElementById("nutritionDashboardToDay").textContent = meals.length;
-        document.getElementById("nutritionDashboardEnargy").textContent = totalEnergyToday.toFixed(2) + "kcal";
-        document.getElementById("nutritionDashboardWater").textContent = totalWaterToday.toFixed(2) + "L";
-        document.getElementById("nutritionDashboardProtion").textContent = totalProteinToday.toFixed(2) + "g";
+        document.getElementById('nutritionDashboardToDay').textContent = meals.length;
+        document.getElementById('nutritionDashboardEnargy').textContent = totalEnergyToday.toFixed(2) + 'kcal';
+        document.getElementById('nutritionDashboardWater').textContent = totalWaterToday.toFixed(2) + 'L';
+        document.getElementById('nutritionDashboardProtion').textContent = totalProteinToday.toFixed(2) + 'g';
+
+
+
     }
 }
 document.addEventListener("DOMContentLoaded", function () {
-    populateFoodNames();
-});
+    populateFoodNames()
+})
 async function populateFoodNames() {
     const foodItems = await hentMåltiderFraAPI();
     const foodNameSelect = document.getElementById("foodNameSelect");
 
     if (foodItems && foodItems.length > 0) {
+
         foodItems.forEach((foodItem) => {
             const option = document.createElement("option");
             option.value = foodItem.foodID; // Set the value to the food ID
@@ -965,7 +974,9 @@ async function populateFoodNames() {
     }
 }
 async function displayfoodNameData(foodID) {
+
     foodID.forEach((item) => {
+
         const energy = +item.energy.replace(",", ".");
         const protein = +item.protein.replace(",", ".");
         const fat = +item.fat.replace(",", ".");
@@ -994,9 +1005,18 @@ async function displayfoodNameData(foodID) {
         } else {
             foodInspectorData.innerHTML = "<p>No data available for the selected food item.</p>";
         }
-    });
+    })
+
 }
 document.getElementById("foodNameSelect").addEventListener("change", async function () {
+    // const selectedFoodID = this.value;
+    // if (selectedFoodID) {
+    //     displayFoodData(selectedFoodID);
+    // } else {
+    //     // Clear data if no food name is selected
+    //     document.getElementById("foodInspectorData").innerHTML = "";
+    // }
+
     try {
         // Get the selected food ID from the select element
         const selectedFoodID = document.getElementById("foodNameSelect").value;
@@ -1028,8 +1048,14 @@ document.getElementById("foodNameSelect").addEventListener("change", async funct
         document.getElementById("foodInspector-lodar").style.display = "block";
         document.getElementById("foodInspectorImage").style.display = "none";
 
+
         // Fetch data for all ingredients
-        const fetchedData = await Promise.all([gotData(selectedFoodID, 1030), gotData(selectedFoodID, 1110), gotData(selectedFoodID, 1310), gotData(selectedFoodID, 1240)]);
+        const fetchedData = await Promise.all([
+            gotData(selectedFoodID, 1030),
+            gotData(selectedFoodID, 1110),
+            gotData(selectedFoodID, 1310),
+            gotData(selectedFoodID, 1240)
+        ]);
 
         // Create an object with the desired structure for each ingredient and push it into ingredientsData array
         ingredientsData.push({
@@ -1042,8 +1068,9 @@ document.getElementById("foodNameSelect").addEventListener("change", async funct
             fiber: fetchedData[3][0].resVal,
         });
 
+
         document.getElementById("foodInspector-lodar").style.display = "none";
-        document.getElementById("foodInspectorImage").textContent = "No Image Found";
+        document.getElementById("foodInspectorImage").textContent = "No Image Found"
         document.getElementById("foodInspectorImage").style.display = "block";
 
         // Show data in the table
