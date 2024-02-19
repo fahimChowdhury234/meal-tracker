@@ -922,7 +922,24 @@ function updateNutritionDashboard() {
     const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
 
     // Find today's data from nutriarray
-    const todayData = nutriarray.find(obj => obj.date === today);
+    let todayData = nutriarray.find(obj => obj.date === today);
+    if (!todayData) {
+        // Sort the nutriarray by date in descending order
+        nutriarray.sort((a, b) => (a.date > b.date ? -1 : 1));
+
+        // Find the nearest available day data
+        for (const data of nutriarray) {
+            if (data.date > today) {
+                todayData = data;
+                break;
+            }
+        }
+    }
+
+    // If no suitable data is found, set todayData to undefined
+    if (!todayData) {
+        todayData = undefined;
+    }
     if (typeof todayData === 'undefined') {
         document.getElementById('nutritionDashboardToDay').textContent = '0';
         document.getElementById('nutritionDashboardEnargy').textContent = '0.00 kcal';
