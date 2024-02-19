@@ -1,3 +1,15 @@
+* {
+    margin: 0;
+
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    overflow-x: hidden;
+}
+
 nav {
     padding: 30px 0;
 }
@@ -24,18 +36,81 @@ main {
 .nutritionDashboard-box {
     padding: 30px;
     border-radius: 8px;
-    background-color: #9cafb3;
+    border: 1px solid #569bd5;
     text-align: center;
-    min-height: 170px;
+    min-height: 200px;
     display: flex;
 
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+    position: relative;
 }
 
-#exampleModal1 {
+.nutritionDashboard-box button {
+    position: absolute;
+    background-color: #569bd5;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    color: #fff;
+    padding: 3px 15px;
+    top: -16px;
+}
+
+.select-foodInspector div {
+    padding: 15px 40px;
+    background-color: #dff5d9;
+    border-radius: 8px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+}
+
+.select-foodInspector strong {
+    width: 15%;
+    display: inline-block;
+}
+
+.select-foodInspector select {
+    width: 80%;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #fff;
+    border: none;
+    outline: none;
+}
+
+.foodInspector-data-warpper {
+    padding: 40px;
+    background-color: #dff5d9;
+    margin-top: 10px;
+    border-radius: 8px;
+    height: 100%;
+}
+
+.foodInspector-data-warpper h3 {
+    font-size: 34px;
+    margin-bottom: 20px;
+}
+
+.foodInspector-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.foodInspector-data-item {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.foodInspector-data-item p {
+    width: 50%;
+}
+
+.select-foodInspector #exampleModal1 {
     background-color: #91c58a !important;
 }
 
@@ -47,6 +122,8 @@ main {
 .nutritionDashboard-box p {
     font-size: 44px;
     font-weight: 700;
+    color: #96c690;
+
 }
 
 .nutritionDashboard-box p span {
@@ -85,17 +162,34 @@ main {
 }
 
 .modal-dialog {
-    max-width: 75%;
+    max-width: 65%;
 }
 
-@media only screen and (max-width: 768px) and (min-width: 300px) {
-    .modal-dialog {
-        max-width: 100%;
-    }
+.percentage-tag {
+    display: inline-block;
+    margin: 0;
+}
 
-    .nutritionDashboard {
-        gap: 15px;
-    }
+#mealTrackerModal .modal-dialog {
+    max-width: 30% !important;
+
+}
+
+.editModal-dialog {
+    max-width: 30% !important;
+}
+
+.mealnams {
+    min-height: 200px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+#mealnames p {
+    margin-bottom: 5px;
 }
 
 .availableFood {
@@ -119,6 +213,8 @@ main {
 
 table {
     width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px !important;
 }
 
 table thead tr th {
@@ -166,4 +262,86 @@ table tbody tr td {
     border: none;
     outline: none;
     background-color: transparent;
+}
+
+.mealCreator-btn button svg {
+    width: 30px;
+}
+
+#lodder {
+    font-size: 24px;
+    font-weight: 600;
+    color: #569bd5;
+    padding-left: 30px;
+}
+
+@media only screen and (max-width: 768px) and (min-width: 300px) {
+    .modal-dialog {
+        max-width: 100%;
+    }
+
+    .nutritionDashboard {
+        gap: 25px;
+    }
+
+    .nutritionDashboard {
+        padding: 20px !important;
+    }
+
+    .menu {
+        overflow-x: auto;
+
+    }
+
+    .menu button {
+        font-size: 16px;
+
+    }
+
+    .menu-content .p-5 {
+        padding: 10px !important;
+    }
+
+    .select-foodInspector div {
+        flex-direction: column;
+    }
+
+    .select-foodInspector strong {
+        width: 100%;
+    }
+
+    .select-foodInspector select {
+        width: 100%;
+    }
+
+    .foodInspector-data-warpper {
+        padding: 20px;
+    }
+
+    #foodInspector .col-md-6 {
+        margin-bottom: 10px;
+    }
+
+    .mealCreator-btn button {
+        width: 35px;
+        height: 35px;
+    }
+
+    .mealCreator-btn button svg {
+        width: 26px;
+    }
+
+    h3 {
+        margin-bottom: 0;
+    }
+
+    .tableWrapper {
+        overflow-x: auto;
+        padding: 10px !important;
+    }
+
+    table {
+        width: 800px;
+        overflow-x: auto;
+    }
 }
