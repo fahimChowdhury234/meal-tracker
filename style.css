@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 * {
     margin: 0;
 
@@ -8,6 +10,7 @@
 body,
 html {
     overflow-x: hidden;
+    font-family: "Inter", sans-serif;
 }
 
 nav {
@@ -28,6 +31,7 @@ main {
     background-color: transparent;
     color: #111;
     border-radius: 8px;
+    font-weight: 600;
     border: none;
     outline: none;
     padding: 10px 30px;
